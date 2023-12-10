@@ -7,5 +7,11 @@ That also means that the code is meant to get me a solution fast, with no focus 
 
 To see 'em in action, run 
 ```
+cargo install cargo-aoc # Rust AoC framework
+cargo aoc credentials TOKEN # Grab token from browser
+
+# download all inputs
+for day in `seq 1 25`; do cargo aoc input --day ${day}; done
+
 cargo run
 ```

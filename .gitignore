@@ -1,2 +1,7 @@
 .vscode
-target
+
+/input
+
+# Added by cargo
+
+/target

@@ -1,5 +1,4 @@
 // not my actual day one a, just a modified part b
-use aoc_runner_derive::aoc;
 #[aoc(day1, part1)]
 fn day01part1(input: &str) -> i32 {
     let mut sum = 0;

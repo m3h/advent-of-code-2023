@@ -1,4 +1,3 @@
-use aoc_runner_derive::aoc;
 use std::fmt;
 
 #[derive(PartialEq, Debug, Clone, Copy)]

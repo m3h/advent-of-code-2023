@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use aoc_runner_derive::aoc;
 use regex::Regex;
 
 #[aoc(day2, part2)]

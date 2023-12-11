@@ -1,7 +1,5 @@
 use std::fmt;
 
-use aoc_runner_derive::aoc;
-
 #[derive(PartialEq, Debug, Clone, Copy)]
 enum PipeType {
     NS,

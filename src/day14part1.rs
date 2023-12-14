@@ -20,18 +20,12 @@ impl ops::Add<Coordinate> for Coordinate {
 #[derive(Copy, Clone)]
 enum Direction {
     North,
-    South,
-    East,
-    West,
 }
 
 impl Direction {
     fn to_movement(&self) -> Coordinate {
         match self {
             Direction::North => Coordinate { y: -1, x: 0 },
-            Direction::South => Coordinate { y: 1, x: 0 },
-            Direction::East => Coordinate { y: 0, x: 1 },
-            Direction::West => Coordinate { y: 0, x: -1 },
         }
     }
 }
@@ -58,14 +52,6 @@ impl Rock {
             'O' => Rock::Round,
             '.' => Rock::Ground,
             _ => panic!("Unknown Rock type: {c}"),
-        }
-    }
-
-    fn to_char(&self) -> char {
-        match self {
-            Rock::Cube => '#',
-            Rock::Round => 'O',
-            Rock::Ground => '.',
         }
     }
 }
@@ -128,47 +114,6 @@ impl Platform {
                     }
                 }
             }
-            Direction::South => {
-                for y in (0..self.map.len()).rev() {
-                    for x in 0..self.map[y].len() {
-                        self.try_roll(
-                            &Coordinate {
-                                y: y as i64,
-                                x: x as i64,
-                            },
-                            direction,
-                        );
-                    }
-                }
-            }
-
-            Direction::East => {
-                for x in (0..self.map[0].len()).rev() {
-                    for y in 0..self.map.len() {
-                        self.try_roll(
-                            &Coordinate {
-                                y: y as i64,
-                                x: x as i64,
-                            },
-                            direction,
-                        );
-                    }
-                }
-            }
-
-            Direction::West => {
-                for x in 0..self.map[0].len() {
-                    for y in 0..self.map.len() {
-                        self.try_roll(
-                            &Coordinate {
-                                y: y as i64,
-                                x: x as i64,
-                            },
-                            direction,
-                        );
-                    }
-                }
-            }
         }
     }
 
@@ -183,31 +128,13 @@ impl Platform {
         }
         return load;
     }
-
-    fn to_str(&self) -> String {
-        let mut s = String::new();
-
-        for y in 0..self.map.len() {
-            for x in 0..self.map[y].len() {
-                s += &self.map[y][x].to_char().to_string();
-            }
-            s += "\n";
-        }
-
-        return s;
-    }
 }
 
 #[aoc(day14, part1)]
 fn day14part1(input: &str) -> usize {
     let mut platform = Platform::from_str(input);
-    let platform_input_s = platform.to_str();
-    println!("input:\n\n{platform_input_s}");
 
     platform.roll(Direction::North);
-
-    let platform_rolled_north_s = platform.to_str();
-    println!("rolled:\n\n{platform_rolled_north_s}");
 
     return platform.total_load();
 }

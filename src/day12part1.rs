@@ -83,7 +83,6 @@ fn day12part1(input: &str) -> i32 {
 
         let arrangements = count_arrangements(&mut visual, &numeric);
         arrangement_sum += arrangements;
-        println!("{visual:?} {numeric:?} {arrangements} {arrangement_sum}");
     }
 
     return arrangement_sum;

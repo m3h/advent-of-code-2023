@@ -60,14 +60,6 @@ impl Rock {
             _ => panic!("Unknown Rock type: {c}"),
         }
     }
-
-    fn to_char(&self) -> char {
-        match self {
-            Rock::Cube => '#',
-            Rock::Round => 'O',
-            Rock::Ground => '.',
-        }
-    }
 }
 
 struct Platform {
@@ -187,19 +179,6 @@ impl Platform {
         return load;
     }
 
-    fn to_str(&self) -> String {
-        let mut s = String::new();
-
-        for y in 0..self.map.len() {
-            for x in 0..self.map[y].len() {
-                s += &self.map[y][x].to_char().to_string();
-            }
-            s += "\n";
-        }
-
-        return s;
-    }
-
     fn spin_cycle(&mut self) {
         self.roll(Direction::North);
         self.roll(Direction::West);
@@ -238,13 +217,10 @@ fn day14part2(input: &str) -> usize {
     // #OO..#....";
 
     let mut platform = Platform::from_str(input);
-    let platform_input_s = platform.to_str();
-    println!("input:\n\n{platform_input_s}");
 
     let mut cycle = 0;
     let total_cycles = 1_000_000_000;
     while cycle < total_cycles {
-        println!("cycle: {cycle}");
         platform.spin_cycle();
 
         match platform.equals_past() {
@@ -258,9 +234,6 @@ fn day14part2(input: &str) -> usize {
         }
         cycle += 1;
     }
-
-    let platform_rolled_north_s = platform.to_str();
-    println!("rolled:\n\n{platform_rolled_north_s}");
 
     return platform.total_load();
 }

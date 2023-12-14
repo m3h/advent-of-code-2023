@@ -53,7 +53,7 @@ fn find_lines_of_reflection(map: &Vec<Vec<char>>) -> usize {
 }
 
 #[aoc(day13, part1)]
-fn day12part2(input: &str) -> usize {
+fn day13part1(input: &str) -> usize {
     // let input = "#.##..##.
     // ..#.##.#.
     // ##......#

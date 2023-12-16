@@ -122,10 +122,6 @@ impl Grid {
         }
     }
 
-    fn energize_init(&mut self) {
-        self.energize(Coordinate { y: 0, x: 0 }, Direction::RIGHT)
-    }
-
     fn get(&mut self, loc: Coordinate) -> &mut TileBeam {
         return &mut self.tile_beam[loc.y as usize][loc.x as usize];
     }

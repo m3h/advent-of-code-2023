@@ -1,5 +1,3 @@
-use std::{collections::HashMap, ops::Index};
-
 fn hash(s: &str) -> usize {
     let mut current_value = 0;
     for c in s.chars() {

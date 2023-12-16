@@ -1,4 +1,3 @@
-
 #[aoc(day6, part2)]
 fn day06part2(input: &str) -> i32 {
     let lines: Vec<String> = input.lines().map(|line| line.replace(" ", "")).collect();

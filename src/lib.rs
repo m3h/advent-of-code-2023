@@ -33,5 +33,7 @@ mod day14part1;
 mod day14part2;
 mod day15part1;
 mod day15part2;
+mod day16part1;
+mod day16part2;
 
 aoc_lib! { year = 2023 }

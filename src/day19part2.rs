@@ -1,3 +1,4 @@
+use lazy_static::lazy_static;
 use regex::Regex;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -66,13 +67,16 @@ struct WorkflowInstruction {
 
 impl WorkflowInstruction {
     fn from_str(instruction_str: &str) -> WorkflowInstruction {
-        let re_always_true = Regex::new(r"^(?<next_workflow>[a-zA-Z]+)$").unwrap();
-        let re_less_than =
-            Regex::new(r"^(?<lhs>[a-zA-Z]+)<(?<rhs>\d+):(?<next_workflow>[a-zA-Z]+)$").unwrap();
-        let re_greater_than =
-            Regex::new(r"^(?<lhs>[a-zA-Z]+)>(?<rhs>\d+):(?<next_workflow>[a-zA-Z]+)$").unwrap();
+        lazy_static! {
+            static ref RE_ALWAYS_TRUE: Regex =
+                Regex::new(r"^(?<next_workflow>[a-zA-Z]+)$").unwrap();
+            static ref RE_LESS_THAN: Regex =
+                Regex::new(r"^(?<lhs>[a-zA-Z]+)<(?<rhs>\d+):(?<next_workflow>[a-zA-Z]+)$").unwrap();
+            static ref RE_GREATER_THAN: Regex =
+                Regex::new(r"^(?<lhs>[a-zA-Z]+)>(?<rhs>\d+):(?<next_workflow>[a-zA-Z]+)$").unwrap();
+        };
 
-        match re_always_true.captures(instruction_str) {
+        match RE_ALWAYS_TRUE.captures(instruction_str) {
             Some(caps) => {
                 return WorkflowInstruction {
                     lhs: String::new(),
@@ -84,7 +88,7 @@ impl WorkflowInstruction {
             None => {}
         };
 
-        match re_less_than.captures(instruction_str) {
+        match RE_LESS_THAN.captures(instruction_str) {
             Some(caps) => {
                 return WorkflowInstruction {
                     lhs: caps["lhs"].to_string(),
@@ -96,7 +100,7 @@ impl WorkflowInstruction {
             None => {}
         }
 
-        match re_greater_than.captures(instruction_str) {
+        match RE_GREATER_THAN.captures(instruction_str) {
             Some(caps) => {
                 return WorkflowInstruction {
                     lhs: caps["lhs"].to_string(),
@@ -198,11 +202,13 @@ impl Workflows {
             workflows: std::collections::HashMap::new(),
         };
 
+        lazy_static! {
+            static ref RE: Regex = Regex::new(r"(?<id>[a-z]+)\{(?<instructions>.*)\}").unwrap();
+        };
         for line in workflows_input.lines() {
             let line = line.trim();
 
-            let re = Regex::new(r"(?<id>[a-z]+)\{(?<instructions>.*)\}").unwrap();
-            let caps = re.captures(line).unwrap();
+            let caps = RE.captures(line).unwrap();
 
             let id = &caps["id"];
             let instructions = &caps["instructions"];
